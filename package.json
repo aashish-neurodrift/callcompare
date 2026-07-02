@@ -1,0 +1,28 @@
+{
+  "name": "callcompare",
+  "version": "1.0.0",
+  "description": "Compare Deepgram (nova-3), AssemblyAI (universal), and Speechmatics (enhanced) transcription and speaker diarization on the same call recording",
+  "type": "module",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@deepgram/sdk": "^5.5.0",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
+    "@speechmatics/batch-client": "^5.4.2",
+    "assemblyai": "^4.13.1",
+    "diff": "^5.2.0",
+    "dotenv": "^16.4.5",
+    "openai": "^6.45.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^5.2.3",
+    "@types/node": "^20.14.10",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}
