@@ -106,5 +106,6 @@ export async function transcribeWithDeepgram(
     wordCount,
     avgConfidence,
     responseTimeMs,
+    raw: response,
   };
 }

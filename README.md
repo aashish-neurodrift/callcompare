@@ -33,6 +33,12 @@ transcribes and separates speakers more accurately on your actual calls.
    - `assemblyai_output.txt` — same format, from AssemblyAI
    - `speechmatics_output.txt` — same format, from Speechmatics
    - `openai_output.txt` — same format, from OpenAI
+   - `deepgram_raw.json` / `assemblyai_raw.json` / `speechmatics_raw.json` / `openai_raw.json` —
+     each provider's complete, unmodified API response, pretty-printed as-is (before
+     diarization normalization, speaker role mapping, or `--corrections` are applied). Useful
+     for debugging a provider-specific quirk or pulling a field the normalized `*_output.txt`
+     doesn't carry (e.g. Deepgram's per-word `punctuated_word` vs `word`, AssemblyAI's raw
+     `speech_model_used`, Speechmatics' flat result items, OpenAI's raw segment objects).
    - `comparison_report.txt` — word counts, speaker counts, response time, average confidence,
      a word-level diff for every pair of providers, and any utterance where a pair disagrees by
      more than 30% of the words spoken (flagged as a "significant disagreement" with both

@@ -78,5 +78,6 @@ export async function transcribeWithAssemblyAI(
     wordCount,
     avgConfidence: transcript.confidence ?? null,
     responseTimeMs,
+    raw: transcript,
   };
 }

@@ -7,7 +7,7 @@ import { transcribeWithAssemblyAI } from "./providers/assemblyai.js";
 import { transcribeWithSpeechmatics } from "./providers/speechmatics.js";
 import { transcribeWithOpenAI } from "./providers/openai.js";
 import { compareTranscripts } from "./compare.js";
-import { writeTranscriptFile, writeComparisonReport } from "./report.js";
+import { writeTranscriptFile, writeComparisonReport, writeRawResponseFile } from "./report.js";
 import { loadVocabulary } from "./vocabulary.js";
 import { loadCorrections, applyCorrections } from "./corrections.js";
 import type { TranscriptionResult } from "./types.js";
@@ -141,12 +141,18 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const results = settled
-    .map((r) => (r as PromiseFulfilledResult<TranscriptionResult>).value)
-    .map((r) => applyCorrections(r, options.corrections));
+  const rawResults = settled.map((r) => (r as PromiseFulfilledResult<TranscriptionResult>).value);
+  const results = rawResults.map((r) => applyCorrections(r, options.corrections));
 
   for (const result of results) {
     console.log(`${result.provider} done in ${result.responseTimeMs} ms (${result.wordCount} words, ${result.speakerCount} speakers)`);
+  }
+
+  const rawOutPaths: string[] = [];
+  for (const result of rawResults) {
+    const rawPath = path.join(callOutDir, `${result.provider.toLowerCase()}_raw.json`);
+    await writeRawResponseFile(rawPath, result);
+    rawOutPaths.push(rawPath);
   }
 
   const rolesByProvider = new Map<string, Map<string, string>>([
@@ -170,6 +176,9 @@ async function main(): Promise<void> {
   console.log(`\nDone. Output files written to: ${callOutDir}`);
   for (const outPath of outPaths) {
     console.log(`  - ${outPath}`);
+  }
+  for (const rawPath of rawOutPaths) {
+    console.log(`  - ${rawPath}`);
   }
   console.log(`  - ${reportPath}`);
 }

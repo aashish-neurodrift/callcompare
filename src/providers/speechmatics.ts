@@ -112,5 +112,6 @@ export async function transcribeWithSpeechmatics(
     wordCount,
     avgConfidence,
     responseTimeMs,
+    raw: response,
   };
 }

@@ -60,5 +60,6 @@ export async function transcribeWithOpenAI(apiKey: string, audioInfo: AudioInfo)
     wordCount,
     avgConfidence: null, // this model/format doesn't return per-word confidence scores
     responseTimeMs,
+    raw: response,
   };
 }

@@ -24,4 +24,6 @@ export interface TranscriptionResult {
   wordCount: number;
   avgConfidence: number | null;
   responseTimeMs: number;
+  /** Unmodified response body returned by the provider's API, before any normalization. */
+  raw: unknown;
 }

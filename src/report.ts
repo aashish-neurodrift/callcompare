@@ -65,6 +65,16 @@ export async function writeTranscriptFile(
 }
 
 /**
+ * Writes the provider's raw, unmodified API response to disk as pretty-printed JSON —
+ * exactly what came back over the wire, before diarization normalization, role mapping,
+ * or --corrections are applied. Useful for debugging a provider-specific quirk or
+ * re-deriving fields the normalized TranscriptionResult doesn't carry.
+ */
+export async function writeRawResponseFile(filePath: string, result: TranscriptionResult): Promise<void> {
+  await writeFile(filePath, JSON.stringify(result.raw, null, 2) + "\n", "utf-8");
+}
+
+/**
  * Writes the side-by-side comparison_report.txt: summary stats, every pairwise word-level
  * diff, flagged disagreement segments per pair, speaker role mapping (if provided), and
  * caveats. Works across any number of providers (currently Deepgram, AssemblyAI, Speechmatics).
